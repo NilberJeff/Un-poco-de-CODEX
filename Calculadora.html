@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora universal</title>
+  <style>
+    :root{
+      --morado:#6D28D9;
+      --morado-osc:#5B21B6;
+      --panel:#171722;
+      --fondo:#0f0f13;
+      --borde:#2a2a3a;
+      --texto:#f6f6f9;
+      --suave:#bfbfd6;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:24px; color:var(--texto);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial;
+      background:linear-gradient(180deg,#0b0b10,#141421 60%,#0b0b10);
+      min-height:100dvh; display:flex; align-items:center; justify-content:center;
+    }
+    .app{
+      width:min(1000px,100%); background:var(--panel); border:1px solid var(--borde);
+      border-radius:18px; padding:22px; box-shadow:0 10px 40px rgba(0,0,0,.35);
+    }
+    header h1{margin:0 0 6px; font-size:1.25rem}
+    header p{margin:0; color:var(--suave); font-size:.95rem}
+
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(2,1fr); margin-top:18px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+
+    .op-card{
+      background:#11111a; border:1px solid var(--borde);
+      border-radius:14px; padding:14px;
+    }
+    .op-card h3{margin:0 0 10px; font-size:1rem; color:#dcdcf7}
+    .fila{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+    .fila > div{display:flex; flex-direction:column}
+    label{font-size:.85rem; color:var(--suave); margin-bottom:6px}
+    input{
+      padding:10px 12px; border-radius:10px; border:1px solid var(--borde);
+      background:#0e0e16; color:var(--texto); outline:none; font-size:1rem;
+    }
+    input:focus{border-color:var(--morado); box-shadow:0 0 0 3px rgba(109,40,217,.25)}
+
+    .acciones{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap}
+    button{
+      padding:10px 14px; border:none; border-radius:12px; cursor:pointer; font-weight:700;
+      background:var(--morado); color:white; transition:.15s transform ease,.15s background;
+    }
+    button:hover{background:var(--morado-osc)}
+    button:active{transform:translateY(1px)}
+    .sec{background:#222235; color:#eaeaff; border:1px solid var(--borde)}
+
+    .resultado{margin-top:10px; padding:10px; border:1px dashed var(--borde);
+      border-radius:10px; background:#0e0e16}
+    .expr{color:#c9c9de; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    .valor{font-size:1.3rem; font-weight:800; margin-top:4px}
+  </style>
+</head>
+<body>
+  <main class="app" role="application" aria-label="Calculadora morada simple">
+    <header>
+      <h1>Calculadora universal</h1>
+      <p>Operaciones separadas con botones normales:</p>
+    </header>
+
+    <section class="grid">
+      <!-- SUMA -->
+      <div class="op-card">
+        <h3>SUMA</h3>
+        <div class="fila">
+          <div><label for="sum-a">A</label><input id="sum-a" type="number" step="any" placeholder="Ej. 12.5"></div>
+          <div><label for="sum-b">B</label><input id="sum-b" type="number" step="any" placeholder="Ej. 3"></div>
+        </div>
+        <div class="acciones">
+          <button onclick="calcSum()">=</button>
+          <button class="sec" onclick="clearCard('sum')">Limpiar</button>
+        </div>
+        <div class="resultado"><div id="sum-expr" class="expr">Expresión: —</div><div id="sum-val" class="valor">Resultado: —</div></div>
+      </div>
+
+      <!-- RESTA -->
+      <div class="op-card">
+        <h3>RESTA</h3>
+        <div class="fila">
+          <div><label for="res-a">A</label><input id="res-a" type="number" step="any"></div>
+          <div><label for="res-b">B</label><input id="res-b" type="number" step="any"></div>
+        </div>
+        <div class="acciones">
+          <button onclick="calcRes()">=</button>
+          <button class="sec" onclick="clearCard('res')">Limpiar</button>
+        </div>
+        <div class="resultado"><div id="res-expr" class="expr">Expresión: —</div><div id="res-val" class="valor">Resultado: —</div></div>
+      </div>
+
+      <!-- MULTIPLICACIÓN -->
+      <div class="op-card">
+        <h3>MULTIPLICACION</h3>
+        <div class="fila">
+          <div><label for="mul-a">A</label><input id="mul-a" type="number" step="any"></div>
+          <div><label for="mul-b">B</label><input id="mul-b" type="number" step="any"></div>
+        </div>
+        <div class="acciones">
+          <button onclick="calcMul()">=</button>
+          <button class="sec" onclick="clearCard('mul')">Limpiar</button>
+        </div>
+        <div class="resultado"><div id="mul-expr" class="expr">Expresión: —</div><div id="mul-val" class="valor">Resultado: —</div></div>
+      </div>
+
+      <!-- DIVISIÓN -->
+      <div class="op-card">
+        <h3>DIVISION</h3>
+        <div class="fila">
+          <div><label for="div-a">A</label><input id="div-a" type="number" step="any"></div>
+          <div><label for="div-b">B</label><input id="div-b" type="number" step="any"></div>
+        </div>
+        <div class="acciones">
+          <button onclick="calcDiv()">=</button>
+          <button class="sec" onclick="clearCard('div')">Limpiar</button>
+        </div>
+        <div class="resultado"><div id="div-expr" class="expr">Expresión: —</div><div id="div-val" class="valor">Resultado: —</div></div>
+      </div>
+
+      <!-- POTENCIA -->
+      <div class="op-card">
+        <h3>POTENCIA (a^b)</h3>
+        <div class="fila">
+          <div><label for="pow-a">a (base)</label><input id="pow-a" type="number" step="any"></div>
+          <div><label for="pow-b">b (exponente)</label><input id="pow-b" type="number" step="any"></div>
+        </div>
+        <div class="acciones">
+          <button onclick="calcPow()">=</button>
+          <button class="sec" onclick="clearCard('pow')">Limpiar</button>
+        </div>
+        <div class="resultado"><div id="pow-expr" class="expr">Expresión: —</div><div id="pow-val" class="valor">Resultado: —</div></div>
+      </div>
+
+      <!-- RAÍZ CUADRADA -->
+      <div class="op-card">
+        <h3>RAIZ CUADRADA (sqrt)</h3>
+        <div class="fila">
+          <div><label for="sqrt-a">a</label><input id="sqrt-a" type="number" step="any"></div>
+          <div><!-- vacío para alinear --></div>
+        </div>
+        <div class="acciones">
+          <button onclick="calcSqrt()">=</button>
+          <button class="sec" onclick="clearCard('sqrt')">Limpiar</button>
+        </div>
+        <div class="resultado"><div id="sqrt-expr" class="expr">Expresión: —</div><div id="sqrt-val" class="valor">Resultado: —</div></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ===== utilidades simples =====
+    const fmt = x => {
+      if (!Number.isFinite(x)) return '—';
+      const r = Math.round(x * 1e10) / 1e10; // redondeo a 10 decimales
+      return String(r);
+    };
+    const read = id => {
+      const el = document.getElementById(id);
+      const v = (el.value ?? '').trim();
+      return v === '' ? NaN : parseFloat(v);
+    };
+    const ok = (exprId, valId, exprTxt, val) => {
+      document.getElementById(exprId).textContent = 'Expresión: ' + exprTxt;
+      document.getElementById(valId).textContent  = 'Resultado: ' + fmt(val);
+    };
+    const err = (exprId, valId, msg) => {
+      document.getElementById(exprId).textContent = 'Expresión: —';
+      document.getElementById(valId).textContent  = 'Error: ' + msg;
+    };
+    const clearCard = pref => {
+      document.querySelectorAll(`#${pref}-a, #${pref}-b`).forEach(i=> i && (i.value=''));
+      document.getElementById(`${pref}-expr`).textContent = 'Expresión: —';
+      document.getElementById(`${pref}-val`).textContent  = 'Resultado: —';
+      const first = document.getElementById(`${pref}-a`); if(first) first.focus();
+    };
+
+    // ===== operaciones (comandos normales) =====
+    function calcSum(){
+      const a = read('sum-a'), b = read('sum-b');
+      if (Number.isNaN(a) || Number.isNaN(b)) return err('sum-expr','sum-val','Falta A o B.');
+      ok('sum-expr','sum-val', `${a} + ${b}`, a + b);
+    }
+    function calcRes(){
+      const a = read('res-a'), b = read('res-b');
+      if (Number.isNaN(a) || Number.isNaN(b)) return err('res-expr','res-val','Falta A o B.');
+      ok('res-expr','res-val', `${a} - ${b}`, a - b);
+    }
+    function calcMul(){
+      const a = read('mul-a'), b = read('mul-b');
+      if (Number.isNaN(a) || Number.isNaN(b)) return err('mul-expr','mul-val','Falta A o B.');
+      ok('mul-expr','mul-val', `${a} * ${b}`, a * b);
+    }
+    function calcDiv(){
+      const a = read('div-a'), b = read('div-b');
+      if (Number.isNaN(a) || Number.isNaN(b)) return err('div-expr','div-val','Falta A o B.');
+      if (b === 0) return err('div-expr','div-val','No se puede dividir entre 0.');
+      ok('div-expr','div-val', `${a} / ${b}`, a / b);
+    }
+    function calcPow(){
+      const a = read('pow-a'), b = read('pow-b');
+      if (Number.isNaN(a) || Number.isNaN(b)) return err('pow-expr','pow-val','Falta a o b.');
+      ok('pow-expr','pow-val', `${a} ^ ${b}`, Math.pow(a, b));
+    }
+    function calcSqrt(){
+      const a = read('sqrt-a');
+      if (Number.isNaN(a)) return err('sqrt-expr','sqrt-val','Falta a.');
+      if (a < 0) return err('sqrt-expr','sqrt-val','sqrt(a) no es real si a < 0.');
+      ok('sqrt-expr','sqrt-val', `sqrt(${a})`, Math.sqrt(a));
+    }
+  </script>
+</body>
+</html>

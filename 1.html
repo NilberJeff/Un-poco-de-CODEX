@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function calcular(){
+            let a=document.querySelector("#vara").value
+            let b=document.querySelector("#varb").value
+            c=a+b
+            document.querySelector("#varc").val=c
+        }
+    </script>
+</head>
+<body>
+    ingrese A:
+    <input type="text" id="vara"><br>
+    ingrese B:
+    <input type="text" id="varb"><br>
+    <button onclick="calcular()">calcular</button>
+    resultado:
+    <input type="text" id="varc">
+</body>
+</html>
