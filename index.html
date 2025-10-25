@@ -45,7 +45,7 @@
     .hero-photo{ aspect-ratio:16/8; background:#0e0e12 }
     .hero-photo img{ width:100%; height:100%; object-fit:cover }
 
-    /* Proyectos */
+    /* Cards */
     .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px }
     @media (max-width:880px){ .cards{ grid-template-columns:1fr } }
     .card{ background:#0f0f13; border:1px solid var(--line); border-radius:14px; padding:14px }
@@ -67,7 +67,6 @@
   <div class="wrap">
     <!-- Perfil -->
     <aside class="sidebar">
-      <!-- Reemplaza portrait.jpg por tu foto -->
       <div class="avatar"><img alt="Foto de Nilber" src="portrait.jpg"></div>
       <div class="name">Nilber Jeferson Quispe Arias</div>
       <div class="meta">20 años · Ingeniería de Sistemas</div>
@@ -75,6 +74,7 @@
       <div class="contact">
         <div><strong>Tel:</strong> 907 267 510</div>
         <div><strong>Gmail:</strong> <a href="mailto:nilberquispearias@gmail.com">nilberquispearias@gmail.com</a></div>
+        <div><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/nilber-jeferson-quispe-arias-85a306330/" target="_blank" rel="noopener">linkedin.com/in/nilber-jeferson-quispe-arias-85a306330</a></div>
       </div>
     </aside>
 
@@ -83,7 +83,6 @@
       <!-- Danza -->
       <section class="section">
         <div class="head"><h2>Práctica · Danza</h2></div>
-        <!-- Reemplaza danza.jpg por tu foto de danza -->
         <div class="hero-photo"><img alt="Presentación de danza" src="danza.jpg"></div>
         <div class="accent"></div>
         <div class="body">
@@ -96,23 +95,55 @@
         <div class="head"><h2>Proyectos</h2></div>
         <div class="body">
           <div class="cards">
+            <!-- HTML -> Calculadora -->
             <div class="card">
               <div class="meta">Categoría</div>
               <h3>HTML</h3>
               <p class="meta">Estructura, semántica y accesibilidad.</p>
-              <a class="btn" href="https://github.com/NilberJeff/Un-poco-de-CODEX" target="_blank" rel="noopener">Ejercicios</a>
+              <a class="btn" href="Calculadora.html">Ejercicios</a>
             </div>
+            <!-- CSS -> Mi PC -->
             <div class="card">
               <div class="meta">Categoría</div>
               <h3>CSS</h3>
               <p class="meta">Layouts modernos (Grid/Flex), responsive.</p>
-              <a class="btn" href="https://github.com/NilberJeff/Un-poco-de-CODEX" target="_blank" rel="noopener">Ejercicios</a>
+              <a class="btn" href="Mi%20Pc.html">Ejercicios</a>
             </div>
+            <!-- JavaScript -> repo -->
             <div class="card">
               <div class="meta">Categoría</div>
               <h3>JavaScript</h3>
               <p class="meta">DOM, eventos y lógica práctica.</p>
               <a class="btn" href="https://github.com/NilberJeff/Un-poco-de-CODEX" target="_blank" rel="noopener">Ejercicios</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trabajos en clase -->
+      <section class="section" id="trabajos">
+        <div class="head"><h2>Trabajos en clase</h2></div>
+        <div class="body">
+          <div class="cards">
+            <div class="card">
+              <h3>Ejercicio 1</h3>
+              <p class="meta">Entrega en clase.</p>
+              <a class="btn" href="1.html">Ver</a>
+            </div>
+            <div class="card">
+              <h3>Ejercicio 2</h3>
+              <p class="meta">Entrega en clase.</p>
+              <a class="btn" href="2.html">Ver</a>
+            </div>
+            <div class="card">
+              <h3>Ejercicio 3</h3>
+              <p class="meta">Entrega en clase.</p>
+              <a class="btn" href="3.html">Ver</a>
+            </div>
+            <div class="card">
+              <h3>Sobre la PC (Trabajo 4)</h3>
+              <p class="meta">Contenido integrado en el sitio.</p>
+              <a class="btn" href="Sobre-la-PC.html">Ver</a>
             </div>
           </div>
         </div>
@@ -124,7 +155,6 @@
         <div class="body">
           <div class="hobby-grid">
             <div class="hobby">
-              <!-- Reemplaza chess.jpg por tu foto de ajedrez -->
               <img alt="Tablero de ajedrez" src="chess.jpg">
               <div class="txt">Me encanta el <strong>ajedrez</strong>: estrategia, cálculo y paciencia. Practico aperturas y partidas rápidas para mejorar mi visión táctica.</div>
             </div>
@@ -142,3 +172,4 @@
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
